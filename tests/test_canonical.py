@@ -22,5 +22,30 @@ class CanonicalizationTest(unittest.TestCase) :
 		rep = canonicalize.centroid.getCanonicalRep(record_list[0:1])
 		assert rep == {"name": "mary crane", "address": "123 main st", "zip":"12345"}
 
+	def test_get_centroid_with_sort_arg(self) :
+		from affinegap import normalizedAffineGapDistance as comparator
+		attributeList = ['mary crane center', 'mary crane east 1', 'mary crane east 2', 'mary crane east 3']
+		sort_values = [2.5, 0.002, 1., 1.22]
+
+		centroid_with_args = canonicalize.centroid.getCentroid (attributeList, comparator, sort_values)
+		assert centroid_with_args == 'mary crane east 3'
+		
+		centroid_without_args = canonicalize.centroid.getCentroid (attributeList, comparator)
+		assert centroid_without_args == 'mary crane east 1'
+
+	def test_get_canonical_rep_with_sort_arg(self):
+		record_list = [ {"name": "mary crane", "address": "123 main st", "zip":"12345", "score":"2"}, 
+					 		 {"name": "mary crane east", "address": "123 main street", "zip":"", "score":"3"}, 
+							 {"name": "mary crane west", "address": "123 man st", "zip":"", "score":"1"} ]
+		
+		rep_with_args = canonicalize.centroid.getCanonicalRep(record_list[0:2], sort_arg='score')
+		assert rep_with_args == {'name': 'mary crane east', 'address': '123 main street', 'zip':"12345", "score":"3"}
+
+		rep_without_args = canonicalize.centroid.getCanonicalRep(record_list[0:2])
+		assert rep_without_args == {"name": "mary crane", "address": "123 main st", "zip":"12345", "score":"2"}
+
+		rep = canonicalize.centroid.getCanonicalRep(record_list[0:1],sort_arg='score')
+		assert rep == {"name": "mary crane", "address": "123 main st", "zip":"12345", "score":"2"}
+
 if __name__ == "__main__":
 	unittest.main()
