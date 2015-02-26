@@ -25,7 +25,7 @@ class CanonicalizationTest(unittest.TestCase) :
 	def test_get_centroid_with_sort_arg(self) :
 		from affinegap import normalizedAffineGapDistance as comparator
 		attributeList = ['mary crane center', 'mary crane east 1', 'mary crane east 2', 'mary crane east 3']
-		sort_values = [2.5, 0.002, 1., 1.22]
+		sort_values = [2.5, 0.002, 97., 102.5]
 
 		centroid_with_args = canonicalize.centroid.getCentroid (attributeList, comparator, sort_values)
 		assert centroid_with_args == 'mary crane east 3'

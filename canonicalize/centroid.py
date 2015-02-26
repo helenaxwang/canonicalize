@@ -1,6 +1,5 @@
 import numpy
 from affinegap import normalizedAffineGapDistance as comparator
-import pdb
 
 def getCentroid(attribute_variants, comparator, sort_values=None):
     """ 
@@ -38,6 +37,7 @@ def breakCentroidTie(attribute_variants, min_dist_indices, sort_values=None):
     ties, but can be modified to break ties in strings by selecting the longest string
     """
     if sort_values:
+        sort_values = map(float,sort_values)
         idx = numpy.argsort(numpy.array(sort_values)[min_dist_indices])[-1]
     else:
         idx = 0
@@ -60,6 +60,7 @@ def getCanonicalRep(record_cluster, sort_arg=None):
                 key_values.append(record[key])
                 if sort_arg: sort_values.append(record[sort_arg])
         if key_values:
+            # make sure to sort by numerics, not strings 
             canonical_rep[key] = getCentroid(key_values, comparator, sort_values=sort_values)
         else:
             canonical_rep[key] = ''
