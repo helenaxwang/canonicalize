@@ -39,13 +39,13 @@ class CanonicalizationTest(unittest.TestCase) :
 							 {"name": "mary crane west", "address": "123 man st", "zip":"", "score":"1"} ]
 		
 		rep_with_args = canonicalize.centroid.getCanonicalRep(record_list[0:2], sort_arg='score')
-		assert rep_with_args == {'name': 'mary crane east', 'address': '123 main street', 'zip':"12345", "score":"3"}
+		assert rep_with_args == {'name': 'mary crane east', 'address': '123 main street', 'zip':"12345"}
 
 		rep_without_args = canonicalize.centroid.getCanonicalRep(record_list[0:2])
 		assert rep_without_args == {"name": "mary crane", "address": "123 main st", "zip":"12345", "score":"2"}
 
 		rep = canonicalize.centroid.getCanonicalRep(record_list[0:1],sort_arg='score')
-		assert rep == {"name": "mary crane", "address": "123 main st", "zip":"12345", "score":"2"}
+		assert rep == {"name": "mary crane", "address": "123 main st", "zip":"12345"}
 
 if __name__ == "__main__":
 	unittest.main()

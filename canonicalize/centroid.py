@@ -53,7 +53,9 @@ def getCanonicalRep(record_cluster, sort_arg=None):
     for key in record_cluster[0].keys():
         key_values = []
         sort_values = None
-        if sort_arg: sort_values = []
+        if sort_arg:
+            if key == sort_arg: continue 
+            else: sort_values = []
         for record in record_cluster :
             # assume non-empty values always better than empty value for canonical record
             if record[key]:
